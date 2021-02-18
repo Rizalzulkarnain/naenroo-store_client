@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Pagination from 'react-js-pagination';
 import Slider from 'rc-slider';
@@ -60,7 +60,7 @@ const Home = ({ match }) => {
     }
 
     dispatch(getAllProducts(keyword, currentPage, price, category, rating));
-  }, [dispatch, toastr, error, keyword, currentPage, price, category, rating]);
+  }, [dispatch, error, keyword, currentPage, price, category, rating]);
 
   let count = productsCount;
   if (keyword) {

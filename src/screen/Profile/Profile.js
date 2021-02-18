@@ -1,12 +1,11 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import MetaData from '../../components/MetaData'
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import MetaData from '../../components/MetaData';
 
-import Spinner from '../../components/Spinner/Spinner'
+import Spinner from '../../components/Spinner/Spinner';
 
 const Profile = () => {
-  const { user, loading } = useSelector((state) => state.auth)
+  const { user, loading } = useSelector((state) => state.auth);
 
   return (
     <>
@@ -16,20 +15,28 @@ const Profile = () => {
         </>
       ) : (
         <>
-          <MetaData title='My Profile' />
-          <div className='container container-fluid'>
-            <h2 className='mt-5 ml-5'>My Profile</h2>
-            <div className='row justify-content-around mt-5 user-info'>
-              <div className='col-12 col-md-3'>
-                <figure className='avatar avatar-profile'>
-                  <img className='rounded-circle img-fluid' src={user.avatar.url} alt={user.name} />
+          <MetaData title="My Profile" />
+          <div className="container container-fluid">
+            <h2 className="mt-5 ml-5">My Profile</h2>
+            <div className="row justify-content-around mt-5 user-info">
+              <div className="col-12 col-md-3">
+                <figure className="avatar avatar-profile">
+                  <img
+                    className="rounded-circle img-fluid"
+                    src={user.avatar.url}
+                    alt={user.name}
+                  />
                 </figure>
-                <Link to='/profile/update' id='edit_profile' className='btn btn-primary btn-block my-5'>
+                <Link
+                  to="/profile/update"
+                  id="edit_profile"
+                  className="btn btn-primary btn-block my-5"
+                >
                   Edit Profile
                 </Link>
               </div>
 
-              <div className='col-12 col-md-5'>
+              <div className="col-12 col-md-5">
                 <h4>Full Name</h4>
                 <p>{user.name}</p>
 
@@ -40,12 +47,18 @@ const Profile = () => {
                 <p>{String(user.createdAt).substring(0, 10)}</p>
 
                 {user.role !== 'admin' && (
-                  <Link to='/orders/profile' className='btn btn-danger btn-block mt-5'>
+                  <Link
+                    to="/orders/profile"
+                    className="btn btn-danger btn-block mt-5"
+                  >
                     My Orders
                   </Link>
                 )}
 
-                <Link to='/auth/update' className='btn btn-primary btn-block mt-3'>
+                <Link
+                  to="/auth/update"
+                  className="btn btn-primary btn-block mt-3"
+                >
                   Change Password
                 </Link>
               </div>
@@ -54,7 +67,7 @@ const Profile = () => {
         </>
       )}
     </>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;
