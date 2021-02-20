@@ -64,7 +64,7 @@ const Login = ({ history }) => {
                     />
                   </div>
 
-                  <Link to="/auth/forgot" className="float-right mb-4">
+                  <Link to="/auth/forgot-password" className="float-right mb-4">
                     Forgot Password?
                   </Link>
 

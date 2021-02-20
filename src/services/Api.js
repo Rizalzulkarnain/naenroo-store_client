@@ -42,3 +42,15 @@ export const logoutUser = () => Http.get(`/api/v1/auth/logout`);
 export const updateProfile = (user) => {
   return Http.put('/api/v1/auth/profile/update', user, config);
 };
+
+export const updatePassword = (password) => {
+  return Http.put('/api/v1/auth/update', password, config);
+};
+
+export const forgotPassword = (email) => {
+  return Http.post('/api/v1/auth/forgot', email, config);
+};
+
+export const newPassword = (token, passwords) => {
+  return Http.put(`/auth/new-password/${token}`, passwords, config);
+};

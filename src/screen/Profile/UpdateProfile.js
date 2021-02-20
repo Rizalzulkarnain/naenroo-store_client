@@ -19,7 +19,7 @@ const UpdateProfile = ({ history }) => {
 
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const { isUpdated, error, loading } = useSelector((state) => state.auth);
+  const { error, loading } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (user) {
@@ -32,7 +32,7 @@ const UpdateProfile = ({ history }) => {
       toastr.error('Update Profile Error', error);
       dispatch(clearErrors());
     }
-  }, [dispatch, user, error, history, isUpdated]);
+  }, [dispatch, user, error, history]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,7 +43,7 @@ const UpdateProfile = ({ history }) => {
     formData.set('avatar', avatar);
 
     dispatch(updateProfileAction(formData));
-    toastr.success('Update Success', 'user updated successsfully');
+    toastr.success('Update Profile Success', 'user updated successsfully');
     dispatch(loadUserAction());
     history.push('/profile');
     dispatch({

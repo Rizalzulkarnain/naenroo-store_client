@@ -20,20 +20,13 @@ const Register = ({ history }) => {
 
   const dispatch = useDispatch();
 
-  const { isAuthenticated, error, loading } = useSelector(
-    (state) => state.auth
-  );
+  const { isAuthenticated, loading } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (isAuthenticated) {
       history.push('/');
     }
-
-    if (error) {
-      toastr.error('Register Error', error);
-      dispatch(clearErrors());
-    }
-  }, [dispatch, isAuthenticated, error, history]);
+  }, [dispatch, isAuthenticated, history]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

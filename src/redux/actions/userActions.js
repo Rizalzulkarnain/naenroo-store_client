@@ -28,6 +28,28 @@ export const updateProfileAction = (user) => async (dispatch) => {
   }
 };
 
+export const updatePasswordAction = (password) => async (dispatch) => {
+  try {
+    dispatch({
+      type: Constant.UPDATE_PASSWORD_REQUEST,
+    });
+
+    const { data: response } = await API.updatePassword(password);
+    dispatch({
+      type: Constant.UPDATE_PASSWORD_SUCCESS,
+      payload: response.data.password,
+    });
+  } catch (error) {
+    dispatch({
+      type: Constant.UPDATE_PASSWORD_ERROR,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
 export const clearErrors = () => async (dispatch) => {
   dispatch({
     type: Constant.CLEAR_ERRORS,

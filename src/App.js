@@ -8,9 +8,12 @@ import ProtectedRoute from './Route/ProtectedRoute';
 import Home from './screen/Home/Home';
 import Login from './screen/Auth/Login';
 import Register from './screen/Auth/Register';
+import ForgotPassword from './screen/Auth/ForgotPassword';
+import NewPassword from './screen/Auth/NewPassword';
 import ProductDetail from './screen/ProductDetail/ProductDetail';
 import Profile from './screen/Profile/Profile';
 import UpdateProfile from './screen/Profile/UpdateProfile';
+import UpdatePassword from './screen/Profile/UpdatePassword';
 
 import { useDispatch } from 'react-redux';
 import { loadUserAction } from './redux/actions/authActions';
@@ -33,13 +36,12 @@ const App = () => {
             <Route path="/search/:keyword" component={Home} />
             <Route path="/products/:id" component={ProductDetail} />
             <Route path="/auth/login" component={Login} />
+            <Route path="/auth/forgot-password" component={ForgotPassword} />
+            <Route path="/auth/new-password/:token" component={NewPassword} />
             <Route path="/auth/register" component={Register} />
-            <ProtectedRoute exact path="/profile" component={Profile} />
-            <ProtectedRoute
-              exact
-              path="/profile/update"
-              component={UpdateProfile}
-            />
+            <ProtectedRoute path="/profile" component={Profile} />
+            <ProtectedRoute path="/auth/update" component={UpdatePassword} />
+            <ProtectedRoute path="/profile/update" component={UpdateProfile} />
           </Layout>
         </Switch>
       </Router>
