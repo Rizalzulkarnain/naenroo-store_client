@@ -32,15 +32,6 @@ const UpdateProfile = ({ history }) => {
       toastr.error('Update Profile Error', error);
       dispatch(clearErrors());
     }
-
-    if (isUpdated) {
-      toastr.success('Update Success', 'user updated successsfully');
-      dispatch(loadUserAction());
-      history.push('/profile');
-      dispatch({
-        type: Constant.UPDATE_PROFILE_RESET,
-      });
-    }
   }, [dispatch, user, error, history, isUpdated]);
 
   const handleSubmit = (e) => {
@@ -52,6 +43,12 @@ const UpdateProfile = ({ history }) => {
     formData.set('avatar', avatar);
 
     dispatch(updateProfileAction(formData));
+    toastr.success('Update Success', 'user updated successsfully');
+    dispatch(loadUserAction());
+    history.push('/profile');
+    dispatch({
+      type: Constant.UPDATE_PROFILE_RESET,
+    });
   };
 
   const onChange = (e) => {

@@ -1,45 +1,47 @@
-import * as Constant from '../constants/userConstants'
+import * as Constant from '../constants/userConstants';
 
 const userState = {
   loading: false,
-  isUpdated: false,
-  error: null
-}
+  updateProfile: {},
+  error: null,
+};
 
 const userReducers = (state = userState, action) => {
   switch (action.type) {
     case Constant.UPDATE_PROFILE_REQUEST:
       return {
-        loading: true
-      }
+        loading: true,
+        updateProfile: {},
+      };
 
     case Constant.UPDATE_PROFILE_SUCCESS:
       return {
         loading: false,
-        isUpdated: action.payload
-      }
+        updateProfile: action.payload,
+      };
 
     case Constant.UPDATE_PROFILE_RESET:
       return {
         loading: false,
-        isUpdated: false
-      }
+        updateProfile: {},
+      };
 
     case Constant.UPDATE_PROFILE_ERROR:
       return {
         loading: false,
-        error: action.payload
-      }
+        error: action.payload,
+        updateProfile: {},
+      };
 
     case Constant.CLEAR_ERRORS:
       return {
         ...state,
-        error: null
-      }
+        error: null,
+      };
 
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default userReducers
+export default userReducers;
