@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
 import { Carousel } from 'react-bootstrap';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getDetailProduct } from '../../redux/actions/productDetailAction';
+import { addToCartAction } from '../../redux/actions/cartActions';
 import { clearErrors } from '../../redux/actions/productsAction';
 import { toastr } from 'react-redux-toastr';
 
@@ -11,10 +12,14 @@ import MetaData from '../../components/MetaData';
 import Spinner from '../../components/Spinner/Spinner';
 
 const ProductDetail = ({ match }) => {
+  const [rating, setRating] = useState(0);
+  const [quantity, setQuantity] = useState(1);
+
   const dispatch = useDispatch();
   const { loading, error, product } = useSelector(
     (state) => state.productDetail
   );
+  const { user } = useSelector((state) => state.auth);
 
   const { id } = match.params;
   useEffect(() => {
@@ -26,6 +31,59 @@ const ProductDetail = ({ match }) => {
     dispatch(getDetailProduct(id));
   }, [dispatch, error, id]);
 
+  const increaseQuantity = () => {
+    if (quantity >= product.stock) return;
+    setQuantity((prevIncrease) => prevIncrease + 1);
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity <= 1) return;
+    setQuantity((prevDecrease) => prevDecrease - 1);
+  };
+
+  const addToCartHandler = () => {
+    dispatch(addToCartAction(id, quantity));
+    toastr.success('Item Added', 'Item SuccessFully add to cart');
+  };
+
+  function setUserRatings() {
+    const stars = document.querySelectorAll('.star');
+
+    stars.forEach((star, index) => {
+      star.starValue = index + 1;
+
+      ['click', 'mouseover', 'mouseout'].forEach(function (e) {
+        star.addEventListener(e, showRatings);
+      });
+    });
+
+    function showRatings(e) {
+      stars.forEach((star, index) => {
+        if (e.type === 'click') {
+          if (index < this.starValue) {
+            star.classList.add('orange');
+
+            setRating(this.starValue);
+          } else {
+            star.classList.remove('orange');
+          }
+        }
+
+        if (e.type === 'mouseover') {
+          if (index < this.starValue) {
+            star.classList.add('yellow');
+          } else {
+            star.classList.remove('yellow');
+          }
+        }
+
+        if (e.type === 'mouseout') {
+          star.classList.remove('yellow');
+        }
+      });
+    }
+  }
+
   return (
     <div className="container container-fluid">
       {loading ? (
@@ -34,7 +92,7 @@ const ProductDetail = ({ match }) => {
         </>
       ) : (
         <>
-          <MetaData title={product.name} />
+          <MetaData title={`${product.name}`} />
           <div className="row f-flex justify-content-around">
             <div className="col-12 col-lg-5 img-fluid" id="product_image">
               <Carousel pause="hover">
@@ -60,7 +118,10 @@ const ProductDetail = ({ match }) => {
               <hr />
 
               <div className="rating-outer">
-                <div className="rating-inner" />
+                <div
+                  className="rating-inner"
+                  style={{ width: `${(product.ratings / 5) * 100}%` }}
+                ></div>
               </div>
               <span id="no_of_reviews">({product.numOfReviews} Reviews)</span>
 
@@ -68,21 +129,33 @@ const ProductDetail = ({ match }) => {
 
               <p id="product_price">Rp.{product.price}</p>
               <div className="stockCounter d-inline">
-                <span className="btn btn-danger minus">-</span>
+                <span
+                  className="btn btn-danger minus"
+                  onClick={decreaseQuantity}
+                >
+                  -
+                </span>
 
                 <input
                   type="number"
                   className="form-control count d-inline"
-                  value="1"
-                  readOnly
+                  value={quantity}
+                  readOnly={true}
                 />
 
-                <span className="btn btn-primary plus">+</span>
+                <span
+                  className="btn btn-primary plus"
+                  onClick={increaseQuantity}
+                >
+                  +
+                </span>
               </div>
               <button
                 type="button"
                 id="cart_btn"
                 className="btn btn-primary d-inline ml-4"
+                disabled={product.stock === 0}
+                onClick={addToCartHandler}
               >
                 Add to Cart
               </button>
@@ -200,4 +273,4 @@ ProductDetail.propTypes = {
   }),
 };
 
-export default ProductDetail;
+export default memo(ProductDetail);

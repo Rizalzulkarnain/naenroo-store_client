@@ -75,7 +75,7 @@ const Home = ({ match }) => {
         </>
       ) : (
         <>
-          <MetaData title="List of Best Products" />
+          <MetaData title="List of All Products" />
           <div className="container container-fluid">
             <h1 id="products_heading">Latest Products</h1>
             <section id="products" className="container mt-5">
