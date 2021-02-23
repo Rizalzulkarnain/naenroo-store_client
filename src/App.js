@@ -11,6 +11,8 @@ import Register from './screen/Auth/Register';
 import ForgotPassword from './screen/Auth/ForgotPassword';
 import NewPassword from './screen/Auth/NewPassword';
 import ProductDetail from './screen/ProductDetail/ProductDetail';
+import Cart from './screen/ProductDetail/Cart';
+
 import Profile from './screen/Profile/Profile';
 import UpdateProfile from './screen/Profile/UpdateProfile';
 import UpdatePassword from './screen/Profile/UpdatePassword';
@@ -35,6 +37,7 @@ const App = () => {
             <Route exact path="/" component={Home} />
             <Route path="/search/:keyword" component={Home} />
             <Route path="/products/:id" component={ProductDetail} />
+            <Route path="/cart" component={Cart} />
             <Route path="/auth/login" component={Login} />
             <Route path="/auth/forgot-password" component={ForgotPassword} />
             <Route path="/auth/new-password/:token" component={NewPassword} />
