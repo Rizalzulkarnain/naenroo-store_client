@@ -7,25 +7,29 @@ const cartState = {
 const cartReducers = (state = cartState, action) => {
   switch (action.type) {
     case Constant.ADD_TO_CART:
-      const item = action.payload;
-
-      const isItemExist = state.cartItems.find(
-        (i) => i.product === item.product
+      const itemExist = state.cartItems.find(
+        (i) => i.product === action.payload.product
       );
 
-      if (isItemExist) {
+      if (itemExist) {
         return {
           ...state,
           cartItems: state.cartItems.map((i) =>
-            i.product === isItemExist.product ? item : i
+            i.product === itemExist.product ? action.payload : i
           ),
         };
       } else {
         return {
           ...state,
-          cartItems: [...state.cartItems, item],
+          cartItems: [...state.cartItems, action.payload],
         };
       }
+
+    case Constant.REMOVE_FROM_CART:
+      return {
+        ...state,
+        cartItems: state.cartItems.filter((i) => i.product !== action.payload),
+      };
 
     default:
       return state;

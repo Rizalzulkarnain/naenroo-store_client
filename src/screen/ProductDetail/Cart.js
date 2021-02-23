@@ -5,7 +5,10 @@ import Spinner from '../../components/Spinner/Spinner';
 import MetaData from '../../components/MetaData';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { addToCartAction } from '../../redux/actions/cartActions';
+import {
+  addToCartAction,
+  removeItemFromCartAction,
+} from '../../redux/actions/cartActions';
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -19,15 +22,19 @@ const Cart = () => {
 
   const decreaseQuantity = (id, quantity) => {
     const newQuantity = quantity - 1;
-    if (newQuantity <= 1) return;
+    if (newQuantity <= 0) return;
     dispatch(addToCartAction(id, newQuantity));
+  };
+
+  const removeItemFromCartHandler = (id) => {
+    dispatch(removeItemFromCartAction(id));
   };
 
   return (
     <>
       <MetaData title="Your Cart" />
       {cartItems.length === 0 ? (
-        <h2 className="mt-2">Your cart is empty</h2>
+        <h2 className="mt-5 text-center">Your cart is empty</h2>
       ) : (
         <>
           <div className="container container-fluid">
@@ -38,7 +45,7 @@ const Cart = () => {
             <div className="row d-flex justify-content-between">
               <div className="col-12 col-lg-8">
                 {cartItems.map((item) => (
-                  <div key={item.id}>
+                  <div key={item.product}>
                     <hr />
                     <div className="cart-item">
                       <div className="row">
@@ -66,7 +73,7 @@ const Cart = () => {
                             <span
                               className="btn btn-danger minus"
                               onClick={() =>
-                                decreaseQuantity(item.id, item.quantity)
+                                decreaseQuantity(item.product, item.quantity)
                               }
                             >
                               -
@@ -82,7 +89,7 @@ const Cart = () => {
                               className="btn btn-primary plus"
                               onClick={() =>
                                 increaseQuantity(
-                                  item.id,
+                                  item.product,
                                   item.quantity,
                                   item.stock
                                 )
@@ -97,6 +104,9 @@ const Cart = () => {
                           <i
                             id="delete_cart_item"
                             className="fa fa-trash btn btn-danger"
+                            onClick={() =>
+                              removeItemFromCartHandler(item.product)
+                            }
                           ></i>
                         </div>
                       </div>
@@ -112,11 +122,23 @@ const Cart = () => {
                   <hr />
                   <p>
                     Subtotal:{' '}
-                    <span className="order-summary-values">3 (Units)</span>
+                    <span className="order-summary-values">
+                      {cartItems.reduce((acc, item) => {
+                        return acc + Number(item.quantity);
+                      }, 0)}{' '}
+                      (Units)
+                    </span>
                   </p>
                   <p>
                     Est. total:{' '}
-                    <span className="order-summary-values">Rp.765.56</span>
+                    <span className="order-summary-values">
+                      Rp.
+                      {cartItems
+                        .reduce((acc, item) => {
+                          return acc + item.quantity * item.price;
+                        }, 0)
+                        .toFixed(2)}
+                    </span>
                   </p>
 
                   <hr />

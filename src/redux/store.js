@@ -11,13 +11,13 @@ import passwordReducers from './reducers/passwordReducers';
 import cartReducers from './reducers/cartReducers';
 
 const rootReducers = combineReducers({
-  toastr: toastrReducer,
   products: productsReducers,
   productDetail: detailProductReducer,
   auth: authReducers,
   user: userReducers,
   password: passwordReducers,
   cart: cartReducers,
+  toastr: toastrReducer,
 });
 
 let initialState = {

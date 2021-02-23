@@ -6,13 +6,22 @@ export const addToCartAction = (id, quantity) => async (dispatch, getState) => {
   dispatch({
     type: Constant.ADD_TO_CART,
     payload: {
-      id: response.data._id,
+      product: response.data._id,
       name: response.data.name,
       price: response.data.price,
       image: response.data.images[0].url,
       stock: response.data.stock,
       quantity: quantity,
     },
+  });
+
+  localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
+};
+
+export const removeItemFromCartAction = (id) => (dispatch, getState) => {
+  dispatch({
+    type: Constant.REMOVE_FROM_CART,
+    payload: id,
   });
 
   localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
