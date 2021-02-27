@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { toastr } from 'react-redux-toastr';
-import Spinner from '../../components/Spinner/Spinner';
+import PropTypes from 'prop-types';
 import MetaData from '../../components/MetaData';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,7 +8,7 @@ import {
   removeItemFromCartAction,
 } from '../../redux/actions/cartActions';
 
-const Cart = () => {
+const Cart = ({ history }) => {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
 
@@ -28,6 +26,10 @@ const Cart = () => {
 
   const removeItemFromCartHandler = (id) => {
     dispatch(removeItemFromCartAction(id));
+  };
+
+  const checkOutHandler = () => {
+    history.push('/login?redirect=shipping');
   };
 
   return (
@@ -65,7 +67,7 @@ const Cart = () => {
                         </div>
 
                         <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-                          <p id="card_item_price">Rp.{item.price}</p>
+                          <p id="card_item_price">$.{item.price}</p>
                         </div>
 
                         <div className="col-4 col-lg-3 mt-4 mt-lg-0">
@@ -132,7 +134,7 @@ const Cart = () => {
                   <p>
                     Est. total:{' '}
                     <span className="order-summary-values">
-                      Rp.
+                      $.
                       {cartItems
                         .reduce((acc, item) => {
                           return acc + item.quantity * item.price;
@@ -145,6 +147,7 @@ const Cart = () => {
                   <button
                     id="checkout_btn"
                     className="btn btn-primary btn-block"
+                    onClick={checkOutHandler}
                   >
                     Check out
                   </button>
@@ -156,6 +159,12 @@ const Cart = () => {
       )}
     </>
   );
+};
+
+Cart.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
 };
 
 export default Cart;

@@ -86,13 +86,13 @@ const Home = ({ match }) => {
                       <div className="px-5">
                         <Range
                           marks={{
-                            1000: `Rp1000`,
-                            100000000: `Rp100000000`,
+                            1: `$1`,
+                            10000: `$10000`,
                           }}
                           min={1}
-                          max={100000000}
-                          defaultValue={[1000, 100000000]}
-                          tipFormatter={(value) => `Rp${value}`}
+                          max={10000}
+                          defaultValue={[1, 10000]}
+                          tipFormatter={(value) => `$${value}`}
                           tipProps={{
                             placement: 'top',
                             visible: true,

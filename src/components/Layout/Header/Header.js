@@ -89,7 +89,7 @@ const Header = () => {
             </div>
           ) : (
             !loading && (
-              <Link to="/auth/login" className="btn ml-2" id="login_btn">
+              <Link to="/login" className="btn ml-2" id="login_btn">
                 Login
               </Link>
             )

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Spinner from '../../components/Spinner/Spinner';
 import MetaData from '../../components/MetaData';
@@ -6,7 +7,7 @@ import MetaData from '../../components/MetaData';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAction } from '../../redux/actions/authActions';
 
-const Login = ({ history }) => {
+const Login = ({ history, location }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -14,11 +15,13 @@ const Login = ({ history }) => {
 
   const { isAuthenticated, loading } = useSelector((state) => state.auth);
 
+  const redirect = location.search ? location.search.split('=')[1] : '/';
+
   useEffect(() => {
     if (isAuthenticated) {
-      history.push('/');
+      history.push(redirect);
     }
-  }, [dispatch, isAuthenticated, history]);
+  }, [dispatch, isAuthenticated, redirect, history]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -64,7 +67,7 @@ const Login = ({ history }) => {
                     />
                   </div>
 
-                  <Link to="/auth/forgot-password" className="float-right mb-4">
+                  <Link to="/forgot-password" className="float-right mb-4">
                     Forgot Password?
                   </Link>
 
@@ -77,7 +80,7 @@ const Login = ({ history }) => {
                     LOGIN
                   </button>
 
-                  <Link to="/auth/register" className="float-right mt-3">
+                  <Link to="/register" className="float-right mt-3">
                     New User?
                   </Link>
                 </form>
@@ -88,6 +91,13 @@ const Login = ({ history }) => {
       )}
     </>
   );
+};
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+  location: PropTypes.object,
 };
 
 export default Login;

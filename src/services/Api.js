@@ -54,3 +54,11 @@ export const forgotPassword = (email) => {
 export const newPassword = (token, passwords) => {
   return Http.put(`/auth/new-password/${token}`, passwords, config);
 };
+
+export const stripeApi = () => {
+  return Http.get(`/api/v1/payment/api`, config);
+};
+
+export const processPayment = (paymentData) => {
+  return Http.post(`/api/v1/payment/process`, paymentData, config);
+};

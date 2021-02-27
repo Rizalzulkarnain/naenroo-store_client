@@ -2,6 +2,7 @@ import * as Constant from '../constants/cartContants';
 
 const cartState = {
   cartItems: [],
+  shippingInfo: {},
 };
 
 const cartReducers = (state = cartState, action) => {
@@ -29,6 +30,12 @@ const cartReducers = (state = cartState, action) => {
       return {
         ...state,
         cartItems: state.cartItems.filter((i) => i.product !== action.payload),
+      };
+
+    case Constant.SAVE_SHIPPING_INFO:
+      return {
+        ...state,
+        shippingInfo: action.payload,
       };
 
     default:

@@ -35,7 +35,7 @@ const NewPassword = ({ history, match }) => {
 
     dispatch(newPasswordAction(token, { newPassword, confirmPassword }));
     toastr.success('Change Password Success', `change password successsfully`);
-    history.push('/auth/login');
+    history.push('/login');
   };
 
   return (
