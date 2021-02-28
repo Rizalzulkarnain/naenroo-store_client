@@ -15,6 +15,7 @@ import Cart from './screen/ProductDetail/Cart';
 import Shipping from './screen/Shipping/Shipping';
 import ConfirmOrder from './screen/Checkout/ConfirmOrder';
 import Payment from './screen/Checkout/Payment';
+import OrderSuccess from './screen/Checkout/OrderSuccess';
 
 import Profile from './screen/Profile/Profile';
 import UpdateProfile from './screen/Profile/UpdateProfile';
@@ -62,6 +63,8 @@ const App = () => {
               path="/order/confirm"
               component={ConfirmOrder}
             />
+
+            <ProtectedRoute exact path="/success" component={OrderSuccess} />
 
             {stripeApiKey && (
               <Elements stripe={loadStripe(stripeApiKey)}>

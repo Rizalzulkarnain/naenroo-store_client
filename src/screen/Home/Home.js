@@ -22,7 +22,7 @@ const Range = createSliderWithTooltip(Slider.Range);
 
 const Home = ({ match }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [price, setPrice] = useState([1000, 100000000]);
+  const [price, setPrice] = useState([1, 10000]);
   const [category, setCategory] = useState('');
   const [rating, setRating] = useState(0);
 
@@ -77,7 +77,7 @@ const Home = ({ match }) => {
         <>
           <MetaData title="List of All Products" />
           <div className="container container-fluid">
-            <h1 id="products_heading">Latest Products</h1>
+            <h1 id="products_heading">List All Products</h1>
             <section id="products" className="container mt-5">
               <div className="row">
                 {keyword ? (

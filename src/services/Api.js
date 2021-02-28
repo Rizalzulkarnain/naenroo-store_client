@@ -62,3 +62,7 @@ export const stripeApi = () => {
 export const processPayment = (paymentData) => {
   return Http.post(`/api/v1/payment/process`, paymentData, config);
 };
+
+export const createOrder = (order) => {
+  return Http.post(`/api/v1/order/new`, order, config);
+};

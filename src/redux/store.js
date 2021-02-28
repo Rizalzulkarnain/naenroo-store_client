@@ -1,24 +1,8 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { reducer as toastrReducer } from 'react-redux-toastr';
 
-import productsReducers from './reducers/productReducers';
-import detailProductReducer from './reducers/productDetailReducer';
-import authReducers from './reducers/authReducers';
-import userReducers from './reducers/userReducers';
-import passwordReducers from './reducers/passwordReducers';
-import cartReducers from './reducers/cartReducers';
-
-const rootReducers = combineReducers({
-  products: productsReducers,
-  productDetail: detailProductReducer,
-  auth: authReducers,
-  user: userReducers,
-  password: passwordReducers,
-  cart: cartReducers,
-  toastr: toastrReducer,
-});
+import rootReducers from './reducers';
 
 let initialState = {
   cart: {
