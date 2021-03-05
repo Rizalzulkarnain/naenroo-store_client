@@ -54,7 +54,7 @@ const Payment = ({ history }) => {
   const orderInfo = JSON.parse(sessionStorage.getItem('orderInfo'));
 
   if (orderInfo) {
-    order.itemPrice = orderInfo.itemsPrice;
+    order.itemsPrice = orderInfo.itemsPrice;
     order.shippingPrice = orderInfo.shippingPrice;
     order.taxPrice = orderInfo.taxPrice;
     order.totalPrice = orderInfo.totalPrice;
@@ -93,8 +93,8 @@ const Payment = ({ history }) => {
           order.paymentInfo = {
             id: result.paymentIntent.id,
             status: result.paymentIntent.status,
+            ...order,
           };
-
           dispatch(createOrderAction(order));
 
           history.push('/success');

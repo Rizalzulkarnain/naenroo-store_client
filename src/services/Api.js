@@ -66,3 +66,7 @@ export const processPayment = (paymentData) => {
 export const createOrder = (order) => {
   return Http.post(`/api/v1/order/new`, order, config);
 };
+
+export const myOrders = () => {
+  return Http.get(`/api/v1/orders/me`, config);
+};

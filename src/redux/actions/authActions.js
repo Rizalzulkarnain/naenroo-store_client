@@ -14,6 +14,7 @@ export const loginAction = (email, password) => async (dispatch) => {
         name: response.data.name,
         email: response.data.email,
         avatar: response.data.avatar,
+        role: response.data.role,
         createdAt: response.data.createdAt,
         token: response.token,
       },
@@ -71,6 +72,7 @@ export const loadUserAction = () => async (dispatch) => {
         email: response.data.email,
         avatar: response.data.avatar,
         createdAt: response.data.createdAt,
+        role: response.data.role,
         token: response.token,
       },
     });

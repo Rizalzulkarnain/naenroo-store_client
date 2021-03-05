@@ -17,6 +17,8 @@ import ConfirmOrder from './screen/Checkout/ConfirmOrder';
 import Payment from './screen/Checkout/Payment';
 import OrderSuccess from './screen/Checkout/OrderSuccess';
 
+import ListOrders from './screen/Order/ListOrders';
+
 import Profile from './screen/Profile/Profile';
 import UpdateProfile from './screen/Profile/UpdateProfile';
 import UpdatePassword from './screen/Profile/UpdatePassword';
@@ -79,6 +81,7 @@ const App = () => {
             <ProtectedRoute path="/profile" component={Profile} />
             <ProtectedRoute path="/update" component={UpdatePassword} />
             <ProtectedRoute path="/profile/update" component={UpdateProfile} />
+            <ProtectedRoute path="/orders/me" component={ListOrders} />
           </Layout>
         </Switch>
       </Router>

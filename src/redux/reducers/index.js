@@ -9,6 +9,7 @@ import userReducers from './userReducers';
 import passwordReducers from './passwordReducers';
 import cartReducers from './cartReducers';
 import newOrderReducers from './newOrderReducers';
+import ordersReducers from './ordersReducers';
 
 const rootReducers = combineReducers({
   products: productsReducers,
@@ -18,6 +19,7 @@ const rootReducers = combineReducers({
   password: passwordReducers,
   cart: cartReducers,
   newOrder: newOrderReducers,
+  myOrders: ordersReducers,
   toastr: toastrReducer,
 });
 
