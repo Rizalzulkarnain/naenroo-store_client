@@ -1,23 +1,20 @@
 import * as Constant from '../constants/orderConstants';
 import * as API from '../../services/Api';
 
-export const createOrderAction = (order) => async (dispatch, getState) => {
+export const getOrderDetailsAction = (id) => async (dispatch) => {
   try {
     dispatch({
-      type: Constant.CREATE_ORDER_REQUEST,
+      type: Constant.ORDER_DETAILS_REQUEST,
     });
 
-    const { data: response } = await API.createOrder(order);
-    localStorage.removeItem('cartItems');
-    localStorage.removeItem('shippingInfo');
-    sessionStorage.removeItem('orderInfo');
+    const { data: response } = await API.orderDetails(id);
     dispatch({
-      type: Constant.CREATE_ORDER_SUCCESS,
+      type: Constant.ORDER_DETAILS_SUCCESS,
       payload: response.data,
     });
   } catch (error) {
     dispatch({
-      type: Constant.CREATE_ORDER_ERROR,
+      type: Constant.ORDER_DETAILS_ERROR,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

@@ -70,3 +70,11 @@ export const createOrder = (order) => {
 export const myOrders = () => {
   return Http.get(`/api/v1/orders/me`, config);
 };
+
+export const orderDetails = (id) => {
+  return Http.get(`/api/v1/order/${id}`, config);
+};
+
+export const newReview = (reviewData) => {
+  return Http.put(`/api/v1/review`, reviewData, config);
+};

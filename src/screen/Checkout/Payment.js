@@ -91,9 +91,9 @@ const Payment = ({ history }) => {
       } else {
         if (result.paymentIntent.status === 'succeeded') {
           order.paymentInfo = {
+            ...order,
             id: result.paymentIntent.id,
             status: result.paymentIntent.status,
-            ...order,
           };
           dispatch(createOrderAction(order));
 
@@ -104,7 +104,7 @@ const Payment = ({ history }) => {
       }
     } catch (error) {
       document.querySelector('#pay_btn').disable = false;
-      toastr.error(error.code);
+      toastr.error(error.messaga);
     }
   };
 

@@ -13,7 +13,7 @@ const ListOrders = () => {
   const dispatch = useDispatch();
 
   const { loading, error, orders } = useSelector((state) => state.myOrders);
-  console.log(orders);
+
   useEffect(() => {
     dispatch(myOrdersAction());
 

@@ -1,35 +1,44 @@
 import { useState, useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
+import Reviews from '../../components/Reviews';
 import { Carousel } from 'react-bootstrap';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getDetailProduct } from '../../redux/actions/productDetailAction';
 import { addToCartAction } from '../../redux/actions/cartActions';
 import { clearErrors } from '../../redux/actions/productsAction';
+import { newReviewActions } from '../../redux/actions/newReviewActions';
 import { toastr } from 'react-redux-toastr';
 
 import MetaData from '../../components/MetaData';
 import Spinner from '../../components/Spinner/Spinner';
 
 const ProductDetail = ({ match }) => {
-  const [rating, setRating] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState('');
 
   const dispatch = useDispatch();
   const { loading, error, product } = useSelector(
     (state) => state.productDetail
   );
   const { user } = useSelector((state) => state.auth);
+  const { error: reviewError } = useSelector((state) => state.newReview);
 
   const { id } = match.params;
   useEffect(() => {
     if (error) {
-      toastr.error('Error Fetching Product Detail', error);
+      toastr.error('Error Fetching Product Detail', error.message);
+      dispatch(clearErrors());
+    }
+
+    if (reviewError) {
+      toastr.error(error.message);
       dispatch(clearErrors());
     }
 
     dispatch(getDetailProduct(id));
-  }, [dispatch, error, id]);
+  }, [dispatch, error, reviewError, id]);
 
   const increaseQuantity = () => {
     if (quantity >= product.stock) return;
@@ -51,7 +60,6 @@ const ProductDetail = ({ match }) => {
 
     stars.forEach((star, index) => {
       star.starValue = index + 1;
-
       ['click', 'mouseover', 'mouseout'].forEach(function (e) {
         star.addEventListener(e, showRatings);
       });
@@ -83,6 +91,17 @@ const ProductDetail = ({ match }) => {
       });
     }
   }
+
+  const reviewHandler = () => {
+    const formData = new FormData();
+
+    formData.set('rating', rating);
+    formData.set('comment', comment);
+    formData.set('productId', id);
+
+    dispatch(newReviewActions(formData));
+    toastr.success('Review posted', `Your review "${comment}" has been post`);
+  };
 
   return (
     <div className="container container-fluid">
@@ -183,15 +202,22 @@ const ProductDetail = ({ match }) => {
                 Sold by: <strong>{product.seller}</strong>
               </p>
 
-              <button
-                id="review_btn"
-                type="button"
-                className="btn btn-primary mt-4"
-                data-toggle="modal"
-                data-target="#ratingModal"
-              >
-                Submit Your Review
-              </button>
+              {user ? (
+                <button
+                  id="review_btn"
+                  type="button"
+                  className="btn btn-primary mt-4"
+                  data-toggle="modal"
+                  data-target="#ratingModal"
+                  onClick={setUserRatings}
+                >
+                  Submit Your Review
+                </button>
+              ) : (
+                <div className="alert alert-danger mt-5">
+                  Login to Post your review.
+                </div>
+              )}
 
               <div className="row mt-2 mb-5">
                 <div className="rating w-50">
@@ -241,6 +267,8 @@ const ProductDetail = ({ match }) => {
                             name="review"
                             id="review"
                             className="form-control mt-3"
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
                           />
 
                           <button
@@ -248,6 +276,7 @@ const ProductDetail = ({ match }) => {
                             className="btn my-3 float-right review-btn px-4 text-white"
                             data-dismiss="modal"
                             aria-label="Close"
+                            onClick={reviewHandler}
                           >
                             Submit
                           </button>
@@ -259,6 +288,9 @@ const ProductDetail = ({ match }) => {
               </div>
             </div>
           </div>
+          {product.reviews && product.reviews.length > 0 && (
+            <Reviews reviews={product.reviews} />
+          )}
         </>
       )}
     </div>
