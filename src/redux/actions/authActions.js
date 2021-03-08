@@ -90,8 +90,6 @@ export const loadUserAction = () => async (dispatch) => {
 export const logoutAction = () => async (dispatch) => {
   try {
     const { data: response } = await API.logoutUser();
-    localStorage.removeItem(`user`);
-    localStorage.removeItem(`token`);
     dispatch({
       type: Constant.LOGOUT_SUCCESS,
       payload: response,

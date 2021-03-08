@@ -24,6 +24,10 @@ import Profile from './screen/Profile/Profile';
 import UpdateProfile from './screen/Profile/UpdateProfile';
 import UpdatePassword from './screen/Profile/UpdatePassword';
 
+import Dashboard from './screen/Admin/Dashboard';
+import ProductsList from './components/ProductsList';
+import CreateProduct from './components/CreateProduct';
+
 import { useDispatch } from 'react-redux';
 import { loadUserAction } from './redux/actions/authActions';
 
@@ -84,6 +88,21 @@ const App = () => {
             <ProtectedRoute path="/profile/update" component={UpdateProfile} />
             <ProtectedRoute path="/orders/me" component={ListOrders} />
             <ProtectedRoute path="/order/:id" component={OrderDetails} />
+            <ProtectedRoute
+              isAdmin={true}
+              path="/dashboard"
+              component={Dashboard}
+            />
+            <ProtectedRoute
+              isAdmin={true}
+              path="/admin/products"
+              component={ProductsList}
+            />
+            <ProtectedRoute
+              isAdmin={true}
+              path="/admin/product"
+              component={CreateProduct}
+            />
           </Layout>
         </Switch>
       </Router>

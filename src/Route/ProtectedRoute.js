@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { loadUserAction } from '../redux/actions/authActions';
 
-const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const { loading, isAuthenticated } = useSelector((state) => state.auth);
+const ProtectedRoute = ({ isAdmin, component: Component, ...rest }) => {
+  const dispatch = useDispatch();
+  const { loading, isAuthenticated, user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    JSON.parse(localStorage.getItem('token'));
-  }, []);
+    dispatch(loadUserAction());
+  }, [dispatch]);
 
   return (
     <>
@@ -19,6 +21,11 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
             if (isAuthenticated === false) {
               return <Redirect to="/login" />;
             }
+
+            if (isAdmin === true && user.role !== 'admin') {
+              return <Redirect to="/" />;
+            }
+
             return <Component {...props} />;
           }}
         />

@@ -12,6 +12,8 @@ import newOrderReducers from './newOrderReducers';
 import ordersReducers from './ordersReducers';
 import orderDetailsReducers from './orderDetailsReducers';
 import NewReviewReducers from './NewReviewReducers';
+import adminProductsReducers from './adminProductReducer';
+import createAdminProductReducers from './createAdminProductReducer';
 
 const rootReducers = combineReducers({
   products: productsReducers,
@@ -24,6 +26,8 @@ const rootReducers = combineReducers({
   myOrders: ordersReducers,
   orderDetails: orderDetailsReducers,
   newReview: NewReviewReducers,
+  adminProducts: adminProductsReducers,
+  createAdminProduct: createAdminProductReducers,
   toastr: toastrReducer,
 });
 

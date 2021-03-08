@@ -78,3 +78,16 @@ export const orderDetails = (id) => {
 export const newReview = (reviewData) => {
   return Http.put(`/api/v1/review`, reviewData, config);
 };
+
+export const adminProducts = () => {
+  return Http.get(`/api/v1/admin/products`, config);
+};
+
+export const createAdminProduct = (product) => {
+  return Http.post(`/api/v1/admin/product`, product, {
+    config,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};

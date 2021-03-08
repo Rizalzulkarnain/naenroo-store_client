@@ -50,7 +50,6 @@ const authReducers = (state = authState, action) => {
         loading: false,
         isAuthenticated: false,
         user: null,
-        token: null,
       };
 
     case Constant.LOGOUT_ERROR:
