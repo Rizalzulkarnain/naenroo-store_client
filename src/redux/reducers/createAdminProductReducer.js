@@ -2,7 +2,7 @@ import * as Constant from '../constants/productConstants';
 
 const adminProductsState = {
   loading: false,
-  product: {},
+  success: {},
   error: null,
 };
 
@@ -18,7 +18,7 @@ const adminProductsReducers = (state = adminProductsState, action) => {
       return {
         ...state,
         loading: false,
-        product: action.payload,
+        success: action.payload,
       };
 
     case Constant.CREATE_ADMIN_PRODUCT_ERROR:

@@ -8,7 +8,6 @@ export const createAdminProductAction = (product) => async (dispatch) => {
     });
 
     const { data: response } = await API.createAdminProduct(product);
-    console.log(response);
     dispatch({
       type: Constant.CREATE_ADMIN_PRODUCT_SUCCESS,
       payload: response.data,

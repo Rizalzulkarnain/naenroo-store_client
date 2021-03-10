@@ -84,7 +84,7 @@ export const adminProducts = () => {
 };
 
 export const createAdminProduct = (product) => {
-  return Http.post(`/api/v1/admin/product`, product, {
+  return Http.post(`/api/v1/admin/products/new`, product, {
     config,
     headers: {
       'Content-Type': 'multipart/form-data',

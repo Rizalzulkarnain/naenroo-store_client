@@ -5,11 +5,10 @@ import MetaData from './MetaData';
 
 import { toastr } from 'react-redux-toastr';
 import { useSelector, useDispatch } from 'react-redux';
-import { createAdminProductAction } from '../redux/actions/createAdminProductAction';
 import {
-  getAdminProductsAction,
+  createAdminProductAction,
   clearErrors,
-} from '../redux/actions/adminProductsAction';
+} from '../redux/actions/createAdminProductAction';
 
 const CreateProduct = ({ history }) => {
   const [name, setName] = useState('');
@@ -37,11 +36,11 @@ const CreateProduct = ({ history }) => {
   ];
 
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.createAdminProduct);
+  const { loading, error, success } = useSelector(
+    (state) => state.createAdminProduct
+  );
 
   useEffect(() => {
-    dispatch(getAdminProductsAction());
-
     if (error) {
       toastr.error(error);
       dispatch(clearErrors());
@@ -65,11 +64,10 @@ const CreateProduct = ({ history }) => {
     });
 
     dispatch(createAdminProductAction(formData));
-    toastr.success(
-      'Your Product is Created !!!',
-      `Product: "${name}" is created successfully, you can add product agan!.`
-    );
-    history.push('/dashboard');
+    if (success) {
+      toastr.success('Product Added', `${name}`);
+      history.push('/admin/products');
+    }
 
     setName('');
     setPrice(0);
@@ -211,7 +209,7 @@ const CreateProduct = ({ history }) => {
                   key={image}
                   src={image}
                   alt="imagePreview"
-                  style={{ width: '55', height: '52' }}
+                  style={{ width: '55px', height: '52px' }}
                 />
               ))}
 
