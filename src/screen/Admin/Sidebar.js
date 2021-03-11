@@ -28,7 +28,7 @@ const Sidebar = () => {
               </li>
 
               <li>
-                <Link to="/admin/product">
+                <Link to="/admin/new/product">
                   <i className="fa fa-plus"></i> Create
                 </Link>
               </li>
@@ -49,7 +49,7 @@ const Sidebar = () => {
 
           <li>
             <Link to="/admin/reviews">
-              <i className="fa fa-star"></i> Ratings
+              <i className="fa fa-star"></i> Reviews
             </Link>
           </li>
         </ul>

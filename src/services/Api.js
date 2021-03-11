@@ -91,3 +91,20 @@ export const createAdminProduct = (product) => {
     },
   });
 };
+
+export const deleteAdminProduct = (id) => {
+  return Http.delete(`/api/v1/admin/products/${id}`, config);
+};
+
+export const updateAdminProduct = (id, product) => {
+  return Http.put(`/api/v1/admin/products/${id}`, product, {
+    config,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
+
+export const allOrders = () => {
+  return Http.get(`/api/v1/admin/orders`, config);
+};

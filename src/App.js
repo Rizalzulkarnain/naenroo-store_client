@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Layout from './components/Layout/Layout';
@@ -27,6 +27,9 @@ import UpdatePassword from './screen/Profile/UpdatePassword';
 import Dashboard from './screen/Admin/Dashboard';
 import ProductsList from './components/ProductsList';
 import CreateProduct from './components/CreateProduct';
+import UpdateProduct from './components/UpdateProduct';
+
+import AllOrdersList from './components/OrdersList';
 
 import { useDispatch } from 'react-redux';
 import { loadUserAction } from './redux/actions/authActions';
@@ -100,8 +103,18 @@ const App = () => {
             />
             <ProtectedRoute
               isAdmin={true}
-              path="/admin/product"
+              path="/admin/new/product"
               component={CreateProduct}
+            />
+            <ProtectedRoute
+              isAdmin={true}
+              path="/admin/update/product/:id"
+              component={UpdateProduct}
+            />
+            <ProtectedRoute
+              isAdmin={true}
+              path="/admin/orders"
+              component={AllOrdersList}
             />
           </Layout>
         </Switch>

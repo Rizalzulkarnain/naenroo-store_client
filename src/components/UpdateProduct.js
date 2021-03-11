@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 
 import Sidebar from '../screen/Admin/Sidebar';
@@ -5,13 +6,14 @@ import MetaData from './MetaData';
 
 import { toastr } from 'react-redux-toastr';
 import { useSelector, useDispatch } from 'react-redux';
+import { getDetailProduct } from '../redux/actions/productDetailAction';
 import { getAdminProductsAction } from '../redux/actions/adminProductsAction';
 import {
-  createAdminProductAction,
+  updateAdminProductAction,
   clearErrors,
-} from '../redux/actions/createAdminProductAction';
+} from '../redux/actions/updateAdminProductAction';
 
-const CreateProduct = ({ history }) => {
+const CreateProduct = ({ match, history }) => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState('');
@@ -19,6 +21,8 @@ const CreateProduct = ({ history }) => {
   const [stock, setStock] = useState(0);
   const [seller, setSeller] = useState('');
   const [images, setImages] = useState([]);
+
+  const [oldImages, setOldImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
 
   const categories = [
@@ -37,9 +41,29 @@ const CreateProduct = ({ history }) => {
   ];
 
   const dispatch = useDispatch();
-  const { loading, error, success } = useSelector(
-    (state) => state.createAdminProduct
+  const { loading, error: updateError, isUpdated } = useSelector(
+    (state) => state.updateAdminProduct
   );
+  const { error, product } = useSelector((state) => state.productDetail);
+
+  const { id } = match.params;
+  useEffect(() => {
+    if (product && product._id !== id) {
+      dispatch(getDetailProduct(id));
+    } else {
+      setName(product.name);
+      setPrice(product.price);
+      setDescription(product.description);
+      setCategory(product.category);
+      setSeller(product.seller);
+      setStock(product.stock);
+      setOldImages(product.images);
+    }
+
+    if (isUpdated) {
+      dispatch(getAdminProductsAction());
+    }
+  }, [product, dispatch, isUpdated, id]);
 
   useEffect(() => {
     if (error) {
@@ -47,10 +71,11 @@ const CreateProduct = ({ history }) => {
       dispatch(clearErrors());
     }
 
-    if (success) {
-      dispatch(getAdminProductsAction());
+    if (updateError) {
+      toastr.error(error);
+      dispatch(clearErrors());
     }
-  }, [dispatch, success, error]);
+  }, [dispatch, updateError, isUpdated, error]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -68,9 +93,9 @@ const CreateProduct = ({ history }) => {
       formData.append('images', image);
     });
 
-    dispatch(createAdminProductAction(formData));
-    if (success) {
-      toastr.success('Product Added', `${name}`);
+    dispatch(updateAdminProductAction(id, formData));
+    if (isUpdated) {
+      toastr.success('Product Updated', `${name}`);
     }
 
     setName('');
@@ -87,6 +112,7 @@ const CreateProduct = ({ history }) => {
 
     setImagesPreview([]);
     setImages([]);
+    setOldImages([]);
 
     files.forEach((file) => {
       const reader = new FileReader();
@@ -104,7 +130,7 @@ const CreateProduct = ({ history }) => {
 
   return (
     <>
-      <MetaData title="Create Product" />
+      <MetaData title="Update Product" />
       <div className="row">
         <div className="col-12 col-md-2">
           <Sidebar />
@@ -116,7 +142,7 @@ const CreateProduct = ({ history }) => {
               className="shadow-lg"
               encType="multipart/form-data"
             >
-              <h1 className="mb-4 text-center">New Product</h1>
+              <h1 className="mb-4 text-center">Update Product</h1>
 
               <div className="form-group">
                 <label htmlFor="name_field">Name</label>
@@ -206,10 +232,21 @@ const CreateProduct = ({ history }) => {
                 </div>
               </div>
 
-              {imagesPreview.map((image) => (
+              {oldImages &&
+                oldImages.map((image) => (
+                  <img
+                    className="mt-3 mr-2"
+                    key={image.public_id}
+                    src={image.url}
+                    alt={image.url}
+                    style={{ width: '55px', height: '52px' }}
+                  />
+                ))}
+
+              {imagesPreview.map((image, index) => (
                 <img
                   className="mt-3 mr-2"
-                  key={image}
+                  key={index}
                   src={image}
                   alt="imagePreview"
                   style={{ width: '55px', height: '52px' }}
@@ -222,7 +259,7 @@ const CreateProduct = ({ history }) => {
                 className="btn btn-block py-3"
                 disabled={loading ? true : false}
               >
-                CREATE
+                UPDATE
               </button>
             </form>
           </div>
@@ -230,6 +267,17 @@ const CreateProduct = ({ history }) => {
       </div>
     </>
   );
+};
+
+CreateProduct.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.any,
+    }),
+  }),
 };
 
 export default CreateProduct;

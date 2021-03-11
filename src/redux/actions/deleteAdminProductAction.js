@@ -1,16 +1,16 @@
 import * as API from '../../services/Api';
 import * as Constant from '../constants/productConstants';
 
-export const createAdminProductAction = (product) => async (dispatch) => {
+export const deleteAdminProductAction = (id) => async (dispatch) => {
   try {
     dispatch({
-      type: Constant.CREATE_ADMIN_PRODUCT_REQUEST,
+      type: Constant.DELETE_ADMIN_PRODUCT_REQUEST,
     });
 
-    const { data: response } = await API.createAdminProduct(product);
+    const { data: response } = await API.deleteAdminProduct(id);
     dispatch({
-      type: Constant.CREATE_ADMIN_PRODUCT_SUCCESS,
-      payload: response.data,
+      type: Constant.DELETE_ADMIN_PRODUCT_SUCCESS,
+      payload: response,
     });
 
     const res = await API.adminProducts();
@@ -20,7 +20,7 @@ export const createAdminProductAction = (product) => async (dispatch) => {
     });
   } catch (error) {
     dispatch({
-      type: Constant.CREATE_ADMIN_PRODUCT_ERROR,
+      type: Constant.DELETE_ADMIN_PRODUCT_ERROR,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

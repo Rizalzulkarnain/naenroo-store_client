@@ -1,27 +1,27 @@
 import * as Constant from '../constants/productConstants';
 
-const adminProductsState = {
+const adminProductState = {
   loading: false,
-  success: {},
+  isDeleted: {},
   error: null,
 };
 
-const createAdminProductsReducers = (state = adminProductsState, action) => {
+const deleteAdminProductReducers = (state = adminProductState, action) => {
   switch (action.type) {
-    case Constant.CREATE_ADMIN_PRODUCT_REQUEST:
+    case Constant.DELETE_ADMIN_PRODUCT_REQUEST:
       return {
         ...state,
         loading: true,
       };
 
-    case Constant.CREATE_ADMIN_PRODUCT_SUCCESS:
+    case Constant.DELETE_ADMIN_PRODUCT_SUCCESS:
       return {
         ...state,
         loading: false,
-        success: action.payload,
+        isDeleted: action.payload,
       };
 
-    case Constant.CREATE_ADMIN_PRODUCT_ERROR:
+    case Constant.DELETE_ADMIN_PRODUCT_ERROR:
       return {
         ...state,
         loading: false,
@@ -39,4 +39,4 @@ const createAdminProductsReducers = (state = adminProductsState, action) => {
   }
 };
 
-export default createAdminProductsReducers;
+export default deleteAdminProductReducers;

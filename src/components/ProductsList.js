@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MDBDataTable } from 'mdbreact';
@@ -12,13 +13,16 @@ import {
   getAdminProductsAction,
   clearErrors,
 } from '../redux/actions/adminProductsAction';
+import { deleteAdminProductAction } from '../redux/actions/deleteAdminProductAction';
 
-const ProductsList = () => {
+const ProductsList = ({ history }) => {
   const dispatch = useDispatch();
 
   const { loading, error, products } = useSelector(
     (state) => state.adminProducts
   );
+
+  const { isDeleted } = useSelector((state) => state.deleteAdminProduct);
 
   useEffect(() => {
     dispatch(getAdminProductsAction());
@@ -27,7 +31,24 @@ const ProductsList = () => {
       toastr.error(error.message);
       dispatch(clearErrors());
     }
-  }, [dispatch, error]);
+
+    if (isDeleted) {
+      dispatch(getAdminProductsAction());
+    }
+  }, [dispatch, isDeleted, error]);
+
+  const deleteProductHandler = (id) => {
+    try {
+      dispatch(deleteAdminProductAction(id));
+      if (isDeleted) {
+        history.push('/admin/products');
+        toastr.success('Product Deleted', `Product was deleted successfully.`);
+      }
+    } catch (error) {
+      toastr.error(error);
+      dispatch(clearErrors());
+    }
+  };
 
   const setProducts = () => {
     const data = {
@@ -69,12 +90,15 @@ const ProductsList = () => {
         actions: (
           <>
             <Link
-              to={`admin/product/${product._id}`}
+              to={`/admin/update/product/${product._id}`}
               className="btn btn-primary py-1"
             >
               <i className="fa fa-pencil"></i>
             </Link>
-            <button className="btn btn-danger py-1 px-2 ml-2">
+            <button
+              onClick={() => deleteProductHandler(product._id)}
+              className="btn btn-danger py-1 px-2 ml-2"
+            >
               <i className="fa fa-trash"></i>
             </button>
           </>
@@ -109,6 +133,10 @@ const ProductsList = () => {
       </div>
     </>
   );
+};
+
+ProductsList.propTypes = {
+  history: PropTypes.any,
 };
 
 export default ProductsList;
