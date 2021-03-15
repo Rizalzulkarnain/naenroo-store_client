@@ -108,3 +108,12 @@ export const updateAdminProduct = (id, product) => {
 export const allOrders = () => {
   return Http.get(`/api/v1/admin/orders`, config);
 };
+
+export const updateOrder = (id, orderData) => {
+  return Http.put(`/api/v1/admin/order/${id}`, orderData, {
+    config,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};

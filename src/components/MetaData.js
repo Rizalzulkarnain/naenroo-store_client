@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const MetaData = ({ title }) => {
   return (
     <Helmet>
-      <title>{`${title} - Naenroo-Store`}</title>
+      <title>{`${title}||Naenroo-Store`}</title>
     </Helmet>
   );
 };

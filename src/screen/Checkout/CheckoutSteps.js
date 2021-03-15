@@ -7,7 +7,7 @@ const CheckoutSteps = ({ shipping, confirmOrder, payment }) => {
       <MetaData title="Checkout Steps" />
       <div className="checkout-progress d-flex justify-content-center mt-5">
         {shipping ? (
-          <Link to="/shipping" className="float-right">
+          <Link to="/shipping/checkout" className="float-right">
             <div className="triangle2-active"></div>
             <div className="step active-step">Shipping</div>
             <div className="triangle-active"></div>
@@ -21,7 +21,7 @@ const CheckoutSteps = ({ shipping, confirmOrder, payment }) => {
         )}
 
         {confirmOrder ? (
-          <Link to="/order/confirm" className="float-right">
+          <Link to="/order/checkout/confirm" className="float-right">
             <div className="triangle2-active"></div>
             <div className="step active-step">Confirm Order</div>
             <div className="triangle-active"></div>
@@ -35,7 +35,7 @@ const CheckoutSteps = ({ shipping, confirmOrder, payment }) => {
         )}
 
         {payment ? (
-          <Link to="/shipping" className="float-right">
+          <Link to="/shipping/checkout" className="float-right">
             <div className="triangle2-active"></div>
             <div className="step active-step">Payment</div>
             <div className="triangle-active"></div>

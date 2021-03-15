@@ -28,6 +28,7 @@ import Dashboard from './screen/Admin/Dashboard';
 import ProductsList from './components/ProductsList';
 import CreateProduct from './components/CreateProduct';
 import UpdateProduct from './components/UpdateProduct';
+import ProcessOrder from './components/ProcessOrder';
 
 import AllOrdersList from './components/OrdersList';
 
@@ -67,10 +68,14 @@ const App = () => {
             <Route path="/search/:keyword" component={Home} />
             <Route path="/products/:id" component={ProductDetail} />
             <Route path="/cart" component={Cart} />
-            <ProtectedRoute exact path="/shipping" component={Shipping} />
             <ProtectedRoute
               exact
-              path="/order/confirm"
+              path="/shipping/checkout"
+              component={Shipping}
+            />
+            <ProtectedRoute
+              exact
+              path="/order/checkout/confirm"
               component={ConfirmOrder}
             />
 
@@ -90,7 +95,7 @@ const App = () => {
             <ProtectedRoute path="/update" component={UpdatePassword} />
             <ProtectedRoute path="/profile/update" component={UpdateProfile} />
             <ProtectedRoute path="/orders/me" component={ListOrders} />
-            <ProtectedRoute path="/order/:id" component={OrderDetails} />
+            <ProtectedRoute path="/order-detail/:id" component={OrderDetails} />
             <ProtectedRoute
               isAdmin={true}
               path="/dashboard"
@@ -115,6 +120,11 @@ const App = () => {
               isAdmin={true}
               path="/admin/orders"
               component={AllOrdersList}
+            />
+            <ProtectedRoute
+              isAdmin={true}
+              path="/admin/order-detail/:id"
+              component={ProcessOrder}
             />
           </Layout>
         </Switch>

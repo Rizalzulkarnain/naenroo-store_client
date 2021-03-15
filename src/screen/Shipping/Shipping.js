@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import CheckoutSteps from '../Checkout/CheckoutSteps';
@@ -34,7 +34,7 @@ const Shipping = ({ history }) => {
       })
     );
 
-    history.push('/order/confirm');
+    history.push('/order/checkout/confirm');
   };
 
   return (

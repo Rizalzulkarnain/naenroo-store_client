@@ -14,16 +14,16 @@ const OrderDetails = ({ match }) => {
   const dispatch = useDispatch();
   const { error, loading, order } = useSelector((state) => state.orderDetails);
 
-  const { orderItems, paymentInfo, shippingInfo, user } = order;
+  const { orderItems, orderStatus, paymentInfo, shippingInfo, user } = order;
 
   const { id } = match.params;
   useEffect(() => {
-    dispatch(getOrderDetailsAction(id));
-
     if (error) {
       toastr.error(error.message);
       dispatch(clearErrors());
     }
+
+    dispatch(getOrderDetailsAction(id));
   }, [dispatch, error, id]);
 
   const shippingDetails =
@@ -42,7 +42,7 @@ const OrderDetails = ({ match }) => {
       ) : (
         <div className="row d-flex justify-content-between">
           <div className="col-12 col-lg-8 mt-5 order-details">
-            <h1 className="my-5">Order # {order._id}</h1>
+            <h1 className="my-5">Order # {order && order._id}</h1>
 
             <h4 className="mb-4">Shipping Info</h4>
             <p>
@@ -70,12 +70,12 @@ const OrderDetails = ({ match }) => {
             <h4 className="my-4">Order Status:</h4>
             <p
               className={
-                paymentInfo && paymentInfo.orderedStatus.includes('Delivered')
+                orderStatus && orderStatus.includes('Delivered')
                   ? 'greenColor'
                   : 'redColor'
               }
             >
-              <b>{paymentInfo && paymentInfo.orderedStatus}</b>
+              <b>{orderStatus && orderStatus}</b>
             </p>
 
             <h4 className="my-4">Order Items:</h4>

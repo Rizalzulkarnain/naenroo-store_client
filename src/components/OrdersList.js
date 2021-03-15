@@ -63,19 +63,19 @@ const OrdersList = ({ history }) => {
       data.rows.push({
         id: order._id,
         numOfItems: order.orderItems.length,
-        amount: `$${order.paymentInfo.totalPrice}`,
+        amount: `$${order.totalPrice}`,
         stock: order.stock,
         status:
-          order.paymentInfo.orderedStatus &&
-          String(order.paymentInfo.orderedStatus).includes('Delivered') ? (
-            <p style={{ color: 'green' }}>{order.paymentInfo.orderedStatus}</p>
+          order.orderStatus &&
+          String(order.orderStatus).includes('Delivered') ? (
+            <p style={{ color: 'green' }}>{order.orderStatus}</p>
           ) : (
-            <p style={{ color: 'red' }}>{order.paymentInfo.orderedStatus}</p>
+            <p style={{ color: 'red' }}>{order.orderStatus}</p>
           ),
         actions: (
           <>
             <Link
-              to={`/admin/orders/${order._id}`}
+              to={`/admin/order-detail/${order._id}`}
               className="btn btn-primary py-1"
             >
               <i className="fa fa-eye"></i>
@@ -93,7 +93,7 @@ const OrdersList = ({ history }) => {
 
   return (
     <>
-      <MetaData title="All Products" />
+      <MetaData title="All Orders" />
       <div className="row">
         <div className="col-12 col-md-2">
           <Sidebar />

@@ -29,7 +29,7 @@ const Cart = ({ history }) => {
   };
 
   const checkOutHandler = () => {
-    history.push('/login?redirect=shipping');
+    history.push('/login?redirect=shipping/checkout');
   };
 
   return (

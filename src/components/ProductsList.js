@@ -28,7 +28,7 @@ const ProductsList = ({ history }) => {
     dispatch(getAdminProductsAction());
 
     if (error) {
-      toastr.error(error.message);
+      toastr.error(error);
       dispatch(clearErrors());
     }
 
