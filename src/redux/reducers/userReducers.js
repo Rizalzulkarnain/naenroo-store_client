@@ -1,4 +1,3 @@
-import { actions } from 'react-redux-toastr';
 import * as Constant from '../constants/userConstants';
 
 const userState = {
@@ -45,13 +44,13 @@ const userReducers = (state = userState, action) => {
     case Constant.UPDATE_PASSWORD_SUCCESS:
       return {
         loading: false,
-        updateProfile: actions.payload,
+        updateProfile: action.payload,
       };
 
     case Constant.UPDATE_PASSWORD_ERROR:
       return {
         loading: false,
-        error: actions.payload,
+        error: action.payload,
         updateProfile: {},
       };
 

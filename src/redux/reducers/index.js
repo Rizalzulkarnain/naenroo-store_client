@@ -18,6 +18,10 @@ import deleteAdminProductReducers from './deleteAdminProductReducer';
 import updateAdminProductReducers from './updateAdminProductReducer';
 import ordersAdminReducers from './ordersAdminReducers';
 import updateOrderReducers from './updateOrderReducers';
+import deleteOrderReducers from './deleteOrderReducers';
+import allUsersReducers from './allUsersReducers';
+import userDetailReducers from './userDetailReducers';
+import updateUserReducers from './updateUserReducers';
 
 const rootReducers = combineReducers({
   products: productsReducers,
@@ -36,6 +40,10 @@ const rootReducers = combineReducers({
   updateAdminProduct: updateAdminProductReducers,
   allOrders: ordersAdminReducers,
   updateOrder: updateOrderReducers,
+  deleteOrder: deleteOrderReducers,
+  allUsers: allUsersReducers,
+  userDetails: userDetailReducers,
+  updateUser: updateUserReducers,
   toastr: toastrReducer,
 });
 

@@ -117,3 +117,24 @@ export const updateOrder = (id, orderData) => {
     },
   });
 };
+
+export const deleteOrder = (id) => {
+  return Http.delete(`/api/v1/admin/order/${id}`, config);
+};
+
+export const allUsers = () => {
+  return Http.get(`/api/v1/admin/users`, config);
+};
+
+export const userDetail = (id) => {
+  return Http.get(`/api/v1/admin/user-detail/${id}`, config);
+};
+
+export const updateUser = (id, user) => {
+  return Http.put(`/api/v1/admin/users/update/${id}`, user, {
+    config,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};

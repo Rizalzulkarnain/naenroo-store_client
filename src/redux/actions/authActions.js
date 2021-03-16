@@ -67,14 +67,7 @@ export const loadUserAction = () => async (dispatch) => {
     const { data: response } = await API.loadUser();
     dispatch({
       type: Constant.LOAD_USER_SUCCESS,
-      payload: {
-        name: response.data.name,
-        email: response.data.email,
-        avatar: response.data.avatar,
-        createdAt: response.data.createdAt,
-        role: response.data.role,
-        token: response.token,
-      },
+      payload: response.data,
     });
   } catch (error) {
     dispatch({

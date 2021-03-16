@@ -7,15 +7,18 @@ import Spinner from '../../components/Spinner/Spinner';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAdminProductsAction } from '../../redux/actions/adminProductsAction';
 import { getAllOrdersAdminAction } from '../../redux/actions/ordersAdminActions';
+import { getAllUsersActions } from '../../redux/actions/allUsersActions';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.adminProducts);
+  const { users } = useSelector((state) => state.allUsers);
   const allOrders = useSelector((state) => state.allOrders);
 
   useEffect(() => {
     dispatch(getAdminProductsAction());
     dispatch(getAllOrdersAdminAction());
+    dispatch(getAllUsersActions());
   }, [dispatch]);
 
   let outOfStock = 0;
@@ -46,7 +49,8 @@ const Dashboard = () => {
                     <div className="card-body">
                       <div className="text-center card-font-size">
                         Total Amount
-                        <br /> <b>${allOrders.totalAmount}</b>
+                        <br />{' '}
+                        <b>${allOrders.totalAmount && allOrders.totalAmount}</b>
                       </div>
                     </div>
                   </div>
@@ -100,7 +104,7 @@ const Dashboard = () => {
                     <div className="card-body">
                       <div className="text-center card-font-size">
                         Users
-                        <br /> <b>45</b>
+                        <br /> <b>{users && users.length}</b>
                       </div>
                     </div>
                     <Link

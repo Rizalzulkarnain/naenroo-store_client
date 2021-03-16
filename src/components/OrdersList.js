@@ -13,11 +13,13 @@ import {
   getAllOrdersAdminAction,
   clearErrors,
 } from '../redux/actions/ordersAdminActions';
+import { deleteOrderAction } from '../redux/actions/deleteOrderActions';
 
 const OrdersList = ({ history }) => {
   const dispatch = useDispatch();
 
   const { loading, error, orders } = useSelector((state) => state.allOrders);
+  const { isDeleted } = useSelector((state) => state.deleteOrder);
 
   useEffect(() => {
     dispatch(getAllOrdersAdminAction());
@@ -26,7 +28,11 @@ const OrdersList = ({ history }) => {
       toastr.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, error]);
+
+    if (isDeleted) {
+      dispatch(getAllOrdersAdminAction);
+    }
+  }, [dispatch, isDeleted, error]);
 
   const setOrders = () => {
     const data = {
@@ -59,6 +65,11 @@ const OrdersList = ({ history }) => {
       rows: [],
     };
 
+    const handleDeleteOrder = (id) => {
+      dispatch(deleteOrderAction(id));
+      toastr.success('Order Deleted', `Order: ${id} Successfully delete...!`);
+    };
+
     orders.forEach((order) => {
       data.rows.push({
         id: order._id,
@@ -80,7 +91,10 @@ const OrdersList = ({ history }) => {
             >
               <i className="fa fa-eye"></i>
             </Link>
-            <button className="btn btn-danger py-1 px-2 ml-2">
+            <button
+              className="btn btn-danger py-1 px-2 ml-2"
+              onClick={() => handleDeleteOrder(order._id)}
+            >
               <i className="fa fa-trash"></i>
             </button>
           </>

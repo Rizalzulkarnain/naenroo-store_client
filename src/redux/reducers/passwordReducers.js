@@ -1,4 +1,3 @@
-import { actions } from 'react-redux-toastr';
 import * as Constant from '../constants/passwordContants';
 
 const userState = {
@@ -18,13 +17,13 @@ const userReducers = (state = userState, action) => {
     case Constant.FORGOT_PASSWORD_SUCCESS:
       return {
         loading: false,
-        message: actions.payload,
+        message: action.payload,
       };
 
     case Constant.FORGOT_PASSWORD_ERROR:
       return {
         loading: false,
-        error: actions.payload,
+        error: action.payload,
       };
 
     case Constant.NEW_PASSWORD_REQUEST:
@@ -35,13 +34,13 @@ const userReducers = (state = userState, action) => {
     case Constant.NEW_PASSWORD_SUCCESS:
       return {
         loading: false,
-        success: actions.payload,
+        success: action.payload,
       };
 
     case Constant.NEW_PASSWORD_ERROR:
       return {
         loading: false,
-        error: actions.payload,
+        error: action.payload,
       };
 
     case Constant.CLEAR_ERRORS:
