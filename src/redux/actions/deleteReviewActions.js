@@ -1,20 +1,20 @@
-import * as Constant from '../constants/userConstants';
+import * as Constant from '../constants/productConstants';
 import * as API from '../../services/Api';
 
-export const getUserDetailsAction = (id) => async (dispatch) => {
+export const deleteReviewAction = (id, productId) => async (dispatch) => {
   try {
     dispatch({
-      type: Constant.USER_DETAILS_REQUEST,
+      type: Constant.DISPLAY_REVIEW_REQUEST,
     });
 
-    const { data: response } = await API.userDetail(id);
+    const { data: response } = await API.deleteReview(id, productId);
     dispatch({
-      type: Constant.USER_DETAILS_SUCCESS,
+      type: Constant.DISPLAY_REVIEW_SUCCESS,
       payload: response.data,
     });
   } catch (error) {
     dispatch({
-      type: Constant.USER_DETAILS_ERROR,
+      type: Constant.DISPLAY_REVIEW_ERROR,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

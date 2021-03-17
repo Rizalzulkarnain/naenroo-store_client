@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { MDBDataTable } from 'mdbreact';
 
@@ -9,24 +8,27 @@ import Spinner from './Spinner/Spinner';
 
 import { toastr } from 'react-redux-toastr';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  getAllUsersActions,
-  clearErrors,
-} from '../redux/actions/allUsersActions';
+import { getAllUsersActions } from '../redux/actions/allUsersActions';
+import { deleteUserAdminAction } from '../redux/actions/deleteUserActions';
 
 const UsersList = () => {
   const dispatch = useDispatch();
 
-  const { loading, error, users } = useSelector((state) => state.allUsers);
+  const { loading, users } = useSelector((state) => state.allUsers);
+  const { isDeleted } = useSelector((state) => state.deleteUser);
 
   useEffect(() => {
     dispatch(getAllUsersActions());
 
-    if (error) {
-      toastr.error(error);
-      dispatch(clearErrors());
+    if (isDeleted) {
+      dispatch(getAllUsersActions());
     }
-  }, [dispatch, error]);
+  }, [dispatch, isDeleted]);
+
+  const deleteUserHandler = (id) => {
+    toastr.confirm('Are you Sure ?');
+    dispatch(deleteUserAdminAction(id));
+  };
 
   const setUsers = () => {
     const data = {
@@ -73,7 +75,10 @@ const UsersList = () => {
             >
               <i className="fa fa-pencil"></i>
             </Link>
-            <button className="btn btn-danger py-1 px-2 ml-2">
+            <button
+              className="btn btn-danger py-1 px-2 ml-2"
+              onClick={() => deleteUserHandler(user._id)}
+            >
               <i className="fa fa-trash"></i>
             </button>
           </>

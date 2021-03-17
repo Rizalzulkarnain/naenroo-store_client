@@ -138,3 +138,18 @@ export const updateUser = (id, user) => {
     },
   });
 };
+
+export const deleteUser = (id) => {
+  return Http.delete(`/api/v1/admin/user/${id}`, config);
+};
+
+export const displayReviews = (id) => {
+  return Http.get(`/api/v1/reviews?id=${id}`, config);
+};
+
+export const deleteReview = (id, productId) => {
+  return Http.delete(
+    `/api/v1/delete-review?id=${id}&productId=${productId}`,
+    config
+  );
+};

@@ -8,9 +8,6 @@ export const createOrderAction = (order) => async (dispatch, getState) => {
     });
 
     const { data: response } = await API.createOrder(order);
-    localStorage.removeItem('cartItems');
-    localStorage.removeItem('shippingInfo');
-    sessionStorage.removeItem('orderInfo');
     dispatch({
       type: Constant.CREATE_ORDER_SUCCESS,
       payload: response.data,

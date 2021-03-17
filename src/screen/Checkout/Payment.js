@@ -97,6 +97,8 @@ const Payment = ({ history }) => {
           };
           dispatch(createOrderAction(order));
 
+          localStorage.removeItem('cartItems');
+          localStorage.removeItem('shippingInfo');
           history.push('/success');
         } else {
           toastr.error('There is some issue for Payment Processing...');

@@ -22,6 +22,9 @@ import deleteOrderReducers from './deleteOrderReducers';
 import allUsersReducers from './allUsersReducers';
 import userDetailReducers from './userDetailReducers';
 import updateUserReducers from './updateUserReducers';
+import deleteUserReducers from './deleteUserReducers';
+import getReviewsReducers from './getReviewsReducers';
+import deleteReviewReducers from './deleteReviewReducers';
 
 const rootReducers = combineReducers({
   products: productsReducers,
@@ -44,6 +47,9 @@ const rootReducers = combineReducers({
   allUsers: allUsersReducers,
   userDetails: userDetailReducers,
   updateUser: updateUserReducers,
+  deleteUser: deleteUserReducers,
+  reviews: getReviewsReducers,
+  deleteReview: deleteReviewReducers,
   toastr: toastrReducer,
 });
 

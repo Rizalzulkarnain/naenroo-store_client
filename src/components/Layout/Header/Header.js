@@ -16,6 +16,14 @@ const Header = () => {
     toastr.success('LogOut Success', 'User Successfully Logout...!');
   };
 
+  const cartTotal = () => {
+    return JSON.parse(localStorage.getItem('cartItems')) === null ? (
+      <>0</>
+    ) : (
+      cartItems.length
+    );
+  };
+
   return (
     <>
       <nav className="navbar row">
@@ -37,7 +45,7 @@ const Header = () => {
               Cart
             </span>
             <span className="ml-1" id="cart_count">
-              {cartItems.length}
+              {cartTotal()}
             </span>
           </Link>
           {user ? (

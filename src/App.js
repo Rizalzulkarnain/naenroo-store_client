@@ -33,6 +33,7 @@ import ProcessOrder from './components/ProcessOrder';
 import AllOrdersList from './components/OrdersList';
 import UsersList from './components/UsersList';
 import UpdateUser from './components/UpdateUser';
+import ProductReviews from './components/ProductReviews';
 
 import { useDispatch } from 'react-redux';
 import { loadUserAction } from './redux/actions/authActions';
@@ -137,6 +138,11 @@ const App = () => {
               isAdmin={true}
               path="/admin/user-detail/:id"
               component={UpdateUser}
+            />
+            <ProtectedRoute
+              isAdmin={true}
+              path="/admin/reviews"
+              component={ProductReviews}
             />
           </Layout>
         </Switch>

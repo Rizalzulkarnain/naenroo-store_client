@@ -12,7 +12,7 @@ import {
   clearErrors,
 } from '../redux/actions/updateUserActions';
 
-const UpdateUser = ({ match }) => {
+const UpdateUser = ({ match, history }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('');
@@ -23,7 +23,7 @@ const UpdateUser = ({ match }) => {
 
   const { id } = match.params;
   useEffect(() => {
-    if (singleUser && singleUser._id !== id) {
+    if (singleUser) {
       setName(singleUser.name);
       setEmail(singleUser.email);
       setRole(singleUser.role);
@@ -52,10 +52,10 @@ const UpdateUser = ({ match }) => {
     dispatch(updateUserAction(singleUser._id, formData));
     if (isUpdated) {
       toastr.success('User Updated', `${name}, ${email}, ${role}`);
+      history.push('/admin/users');
     }
   };
 
-  console.log(singleUser);
   return (
     <>
       <MetaData title="Update User" />
