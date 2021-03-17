@@ -99,6 +99,8 @@ const Payment = ({ history }) => {
 
           localStorage.removeItem('cartItems');
           localStorage.removeItem('shippingInfo');
+          sessionStorage.removeItem('orderInfo');
+
           history.push('/success');
         } else {
           toastr.error('There is some issue for Payment Processing...');
